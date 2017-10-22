@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">guXgu</string>
     <string name="playButton">Play</string>
+    <string name="random">Random</string>
+    <string name="TimeTables">Time</string>
 </resources>
