@@ -1,6 +1,8 @@
 package comguguxmathguxgu.httpsgithub.guxgu;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static android.R.attr.button;
+import static android.R.attr.right;
 import static android.R.attr.x;
 import static android.R.id.button1;
 import static android.support.v7.widget.AppCompatDrawableManager.get;
@@ -22,7 +25,8 @@ import static comguguxmathguxgu.httpsgithub.guxgu.R.string.random;
 
 public class PlayLevelActivity extends AppCompatActivity {
 
-
+    private static SoundPool mSoundPool;
+    private static int right_answer;
     private Button button1, button2, button3, button4;
     private ProgressBar progressBar;
     private TextView equation;
@@ -35,6 +39,8 @@ public class PlayLevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_level);
 
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        right_answer = mSoundPool.load(getApplicationContext(), R.raw.right_answer, 1);
         equation = (TextView) findViewById(R.id.findEquation);
         scoreStreak = (TextView) findViewById(R.id.streakScore);
         button1 = (Button)findViewById(R.id.button1);
@@ -61,6 +67,7 @@ public class PlayLevelActivity extends AppCompatActivity {
 
     public void right()
     {
+        mSoundPool.play(right_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         game.addStreak();
         start();
     }
@@ -99,7 +106,6 @@ public class PlayLevelActivity extends AppCompatActivity {
     {
         scoreStreak.setText("Streak: " + st);
         progressBar.setProgress(10 * Integer.parseInt(game.getStreak()));
-        if()
     }
 
 
