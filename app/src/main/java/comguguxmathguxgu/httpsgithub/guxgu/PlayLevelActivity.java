@@ -3,52 +3,136 @@ package comguguxmathguxgu.httpsgithub.guxgu;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static android.R.attr.button;
+import static android.R.attr.x;
 import static android.R.id.button1;
 import static android.support.v7.widget.AppCompatDrawableManager.get;
+import static comguguxmathguxgu.httpsgithub.guxgu.R.id.button4;
+import static comguguxmathguxgu.httpsgithub.guxgu.R.id.streakScore;
+import static comguguxmathguxgu.httpsgithub.guxgu.R.string.random;
 
 public class PlayLevelActivity extends AppCompatActivity {
 
-    static Random rand = new Random(); //declaring a random object
 
+    private Button button1, button2, button3, button4;
+    private ProgressBar progressBar;
+    private TextView equation;
+    private TextView scoreStreak;
+    private PlayLevelSelect game;
+    private int multiple;
+    private int[] choices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_level);
 
-        TextView equation = (TextView) findViewById(R.id.findEquation); //Declaring the text view
-        Button button1 = (Button)findViewById(R.id.button1); //  declaring the buttons
-        Button button2 = (Button)findViewById(R.id.button2);
-        Button button3 = (Button)findViewById(R.id.button3);
-        Button button4 = (Button)findViewById(R.id.button4);
-        Intent intent = getIntent(); //declaring the intent to get the number of the level
-        int choices[]=new int[]{-1, -1, -1, -1}; // declaring and array to store the choices
-        int multiple, num, ans; // declaring the multiple, number of the level, and the answer
+        equation = (TextView) findViewById(R.id.findEquation);
+        scoreStreak = (TextView) findViewById(R.id.streakScore);
+        button1 = (Button)findViewById(R.id.button1);
+        button2 = (Button)findViewById(R.id.button2);
+        button3 = (Button)findViewById(R.id.button3);
+        button4 = (Button)findViewById(R.id.button4);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        choices = new int[4];
+        Intent intent = getIntent();
+        int num = intent.getIntExtra("num", 0);
 
-        num = intent.getIntExtra("num", 0); // getting the number of the level that the player is on
 
-        multiple = rand.nextInt(9) + 1; //making a random number to be the multiple of the level
+        game = new PlayLevelSelect(num);
+        start();
+    }
 
-        ans = num * multiple; // getting the answer
+    public void start()
+    {
+        multiple = game.getMultiple();
+        equation.setText(game.getEquation());
+        makeChoices();
+        streak(game.getStreak());
+    }
 
-        equation.setText(Integer.toString(num) + " X ? = " + Integer.toString(ans)); // displaying the equation
+    public void right()
+    {
+        game.addStreak();
+        start();
+    }
 
-        choices[rand.nextInt(4)] = multiple; // storing the answer in a random choice
+    public void wrong()
+    {
+        game.zeroStreak();
+        start();
+    }
 
-        for(int i=0; i<4; i++) // making and filling the left over choices with random number from 0-9
-            if(choices[i] == -1)
-                choices[i] = rand.nextInt(10);
 
-        button1.setText(Integer.toString(choices[0])); // changing the text in the buttons to the choices
+    public void makeChoices()
+    {
+        Random rand = new Random();
+        int n;
+
+        for(int i=0; i<4; i++)
+        {
+            do {
+                n = game.getChoices();
+            }while(Arrays.asList(choices).contains(n) || n == multiple);
+
+            choices[i] = game.getChoices();
+        }
+
+
+        choices[rand.nextInt(4)] = multiple;
+
+        button1.setText(Integer.toString(choices[0]));
         button2.setText(Integer.toString(choices[1]));
         button3.setText(Integer.toString(choices[2]));
         button4.setText(Integer.toString(choices[3]));
+    }
+
+    public void streak(String st)
+    {
+        scoreStreak.setText("Streak: " + st);
+        progressBar.setProgress(10 * Integer.parseInt(game.getStreak()));
+        if()
+    }
+
+
+    public void onButton1Clicked(View v)
+    {
+        if(choices[0] == multiple)
+            right();
+        else
+            wrong();
+    }
+
+    public void onButton2Clicked(View v)
+    {
+        if(choices[1] == multiple)
+            right();
+        else
+            wrong();
+    }
+
+    public void onButton3Clicked(View v)
+    {
+        if(choices[2] == multiple)
+            right();
+        else
+            wrong();
+    }
+
+    public void onButton4Clicked(View v)
+    {
+        if(choices[3] == multiple)
+            right();
+        else
+            wrong();
     }
 
 }
