@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/level1"
-        android:onClick="onLevelClicked"
+        android:onClick="onLevel1Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 1"
@@ -24,6 +24,7 @@
 
     <Button
         android:id="@+id/level2"
+        android:onClick="onLevel2Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 2"
@@ -36,6 +37,7 @@
 
     <Button
         android:id="@+id/level3"
+        android:onClick="onLevel3Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 3"
@@ -48,6 +50,7 @@
 
     <Button
         android:id="@+id/level4"
+        android:onClick="onLevel4Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 4"
@@ -61,6 +64,7 @@
 
     <Button
         android:id="@+id/level5"
+        android:onClick="onLevel5Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 5"
@@ -74,6 +78,7 @@
 
     <Button
         android:id="@+id/level6"
+        android:onClick="onLevel6Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 6"
@@ -87,6 +92,7 @@
 
     <Button
         android:id="@+id/level7"
+        android:onClick="onLevel7Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 7"
@@ -100,6 +106,7 @@
 
     <Button
         android:id="@+id/level8"
+        android:onClick="onLevel8Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 8"
@@ -113,6 +120,7 @@
 
     <Button
         android:id="@+id/level9"
+        android:onClick="onLevel9Clicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="level 9"
