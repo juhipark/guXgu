@@ -27,6 +27,7 @@ public class PlayLevelActivity extends AppCompatActivity {
 
     private static SoundPool mSoundPool;
     private static int right_answer;
+    private static int wrong_answer;
     private Button button1, button2, button3, button4;
     private ProgressBar progressBar;
     private TextView equation;
@@ -41,6 +42,7 @@ public class PlayLevelActivity extends AppCompatActivity {
 
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         right_answer = mSoundPool.load(getApplicationContext(), R.raw.right_answer, 1);
+        wrong_answer = mSoundPool.load(getApplicationContext(), R.raw.wrong_answer, 1);
         equation = (TextView) findViewById(R.id.findEquation);
         scoreStreak = (TextView) findViewById(R.id.streakScore);
         button1 = (Button)findViewById(R.id.button1);
@@ -74,6 +76,7 @@ public class PlayLevelActivity extends AppCompatActivity {
 
     public void wrong()
     {
+        mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         game.zeroStreak();
         start();
     }
