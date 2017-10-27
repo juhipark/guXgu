@@ -21,6 +21,10 @@
         </activity>
         <activity android:name=".PlayLevelActivity">
         </activity>
+        <activity android:name=".levelUp">
+        </activity>
+        <activity android:name=".LevelUp">
+        </activity>
     </application>
 
 </manifest>

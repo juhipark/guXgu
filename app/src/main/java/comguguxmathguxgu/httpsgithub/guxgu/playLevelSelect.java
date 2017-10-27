@@ -27,6 +27,8 @@ public class PlayLevelSelect {
         this.num = num;
     }
 
+    public int getNum() {return num;}
+
     public int getMultiple() {
         multiple = rand.nextInt(10);
         return multiple;

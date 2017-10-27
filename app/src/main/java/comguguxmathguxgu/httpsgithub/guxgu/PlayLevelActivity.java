@@ -35,6 +35,7 @@ public class PlayLevelActivity extends AppCompatActivity {
     private PlayLevelSelect game;
     private int multiple;
     private int[] choices;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,9 @@ public class PlayLevelActivity extends AppCompatActivity {
     {
         mSoundPool.play(right_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         game.addStreak();
+        levelUp();
         start();
+
     }
 
     public void wrong()
@@ -93,7 +96,7 @@ public class PlayLevelActivity extends AppCompatActivity {
                 n = game.getChoices();
             }while(Arrays.asList(choices).contains(n) || n == multiple);
 
-            choices[i] = game.getChoices();
+            choices[i] = n;
         }
 
 
@@ -142,6 +145,17 @@ public class PlayLevelActivity extends AppCompatActivity {
             right();
         else
             wrong();
+    }
+
+    public void levelUp()
+    {
+        if(Integer.parseInt(game.getStreak()) == 10)
+        {
+            Intent intent = new Intent(getApplicationContext(),LevelUp.class);
+            intent.putExtra("num", game.getNum());
+            startActivity(intent);
+        }
+
     }
 
 }

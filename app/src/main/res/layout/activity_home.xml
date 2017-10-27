@@ -9,12 +9,15 @@
     <Button
         android:id="@+id/playButton"
         android:onClick="onPlayButtonClicked"
+        android:width="200dp"
+        android:height="100dp"
+        android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/playButton"
         tools:layout_editor_absoluteX="135dp"
         tools:layout_editor_absoluteY="33dp"
-        android:layout_marginBottom="89dp"
+        android:layout_marginBottom="21dp"
         android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"/>
 
@@ -26,9 +29,9 @@
         android:text="Help"
         tools:layout_editor_absoluteX="138dp"
         tools:layout_editor_absoluteY="325dp"
-        android:layout_marginBottom="192dp"
+        android:layout_marginBottom="227dp"
         android:onClick="onHelpButtonClicked"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
