@@ -20,7 +20,6 @@ import static android.R.attr.x;
 import static android.R.id.button1;
 import static android.support.v7.widget.AppCompatDrawableManager.get;
 import static comguguxmathguxgu.httpsgithub.guxgu.R.id.button4;
-import static comguguxmathguxgu.httpsgithub.guxgu.R.id.streakScore;
 import static comguguxmathguxgu.httpsgithub.guxgu.R.string.random;
 
 public class PlayLevelActivity extends AppCompatActivity {
@@ -91,11 +90,11 @@ public class PlayLevelActivity extends AppCompatActivity {
 
     public void getEquation()
     {
-        equation.setText(Integer.toString(num) + Integer.toString(multiple) + "=?");
+        equation.setText(Integer.toString(num) + " * " + Integer.toString(multiple) + " = ?");
     }
 
     public void getButtons() {
-        boolean repeat=false; 
+        boolean repeat=false;
 
         for (int i = 0; i < 4; i++) {
             do {
@@ -111,10 +110,10 @@ public class PlayLevelActivity extends AppCompatActivity {
 
         buttonChoices[rand.nextInt(4)] = multiple * num;
 
-        button1.setText(buttonChoices[0]);
-        button2.setText(buttonChoices[1]);
-        button3.setText(buttonChoices[2]);
-        button4.setText(buttonChoices[3]);
+        button1.setText(Integer.toString(buttonChoices[0]));
+        button2.setText(Integer.toString(buttonChoices[1]));
+        button3.setText(Integer.toString(buttonChoices[2]));
+        button4.setText(Integer.toString(buttonChoices[3]));
     }
 
     public void checkAnswer(int n)
@@ -128,6 +127,8 @@ public class PlayLevelActivity extends AppCompatActivity {
             numbers[n] = 0;
             mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         }
+
+        start();
     }
     public void onButton1Clicked(View v){
         checkAnswer(0);
