@@ -26,15 +26,15 @@ import static comguguxmathguxgu.httpsgithub.guxgu.R.string.random;
 public class PlayLevelActivity extends AppCompatActivity {
 
     private static SoundPool mSoundPool;
+    private Random rand = new Random();
     private static int right_answer;
     private static int wrong_answer;
     private Button button1, button2, button3, button4;
-    private ProgressBar progressBar;
     private TextView equation;
-    private TextView scoreStreak;
-    private PlayLevelSelect game;
+    private int[] numbers = new int[8];
+    private int[] buttonChoices = new int[4];
     private int multiple;
-    private int[] choices;
+    private int num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,117 +45,104 @@ public class PlayLevelActivity extends AppCompatActivity {
         right_answer = mSoundPool.load(getApplicationContext(), R.raw.right_answer, 1);
         wrong_answer = mSoundPool.load(getApplicationContext(), R.raw.wrong_answer, 1);
         equation = (TextView) findViewById(R.id.findEquation);
-        scoreStreak = (TextView) findViewById(R.id.streakScore);
         button1 = (Button)findViewById(R.id.button1);
         button2 = (Button)findViewById(R.id.button2);
         button3 = (Button)findViewById(R.id.button3);
         button4 = (Button)findViewById(R.id.button4);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        choices = new int[4];
+        Arrays.fill(numbers, 0);
         Intent intent = getIntent();
-        int num = intent.getIntExtra("num", 0);
+        num = intent.getIntExtra("num", 0);
 
-
-        game = new PlayLevelSelect(num);
         start();
     }
 
     public void start()
     {
-        multiple = game.getMultiple();
-        equation.setText(game.getEquation());
-        makeChoices();
-        streak(game.getStreak());
-    }
-
-    public void right()
-    {
-        mSoundPool.play(right_answer, 1.0f, 1.0f, 0, 0, 1.0f);
-        game.addStreak();
         levelUp();
-        start();
-
-    }
-
-    public void wrong()
-    {
-        mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
-        game.zeroStreak();
-        start();
-    }
-
-
-    public void makeChoices()
-    {
-        Random rand = new Random();
-        int n;
-
-        for(int i=0; i<4; i++)
-        {
-            do {
-                n = game.getChoices();
-            }while(Arrays.asList(choices).contains(n) || n == multiple);
-
-            choices[i] = n;
-        }
-
-
-        choices[rand.nextInt(4)] = multiple;
-
-        button1.setText(Integer.toString(choices[0]));
-        button2.setText(Integer.toString(choices[1]));
-        button3.setText(Integer.toString(choices[2]));
-        button4.setText(Integer.toString(choices[3]));
-    }
-
-    public void streak(String st)
-    {
-        scoreStreak.setText("Streak: " + st);
-        progressBar.setProgress(10 * Integer.parseInt(game.getStreak()));
-    }
-
-
-    public void onButton1Clicked(View v)
-    {
-        if(choices[0] == multiple)
-            right();
-        else
-            wrong();
-    }
-
-    public void onButton2Clicked(View v)
-    {
-        if(choices[1] == multiple)
-            right();
-        else
-            wrong();
-    }
-
-    public void onButton3Clicked(View v)
-    {
-        if(choices[2] == multiple)
-            right();
-        else
-            wrong();
-    }
-
-    public void onButton4Clicked(View v)
-    {
-        if(choices[3] == multiple)
-            right();
-        else
-            wrong();
+        getNumber();
+        getEquation();
+        getButtons();
     }
 
     public void levelUp()
     {
-        if(Integer.parseInt(game.getStreak()) == 10)
-        {
-            Intent intent = new Intent(getApplicationContext(),LevelUp.class);
-            intent.putExtra("num", game.getNum());
-            startActivity(intent);
+        boolean check=true;
+
+        for(int i=0; i<8; i++) {
+            if(numbers[i] < 3){
+                check = false;
+                break;
+            }
         }
 
+        if(check)
+            ;//level up
+    }
+
+    public void getNumber()
+    {
+        int temp;
+        do{
+            temp = rand.nextInt(8);
+        }while(numbers[temp] >= 3);
+
+        multiple = temp + 2;
+    }
+
+    public void getEquation()
+    {
+        equation.setText(Integer.toString(num) + Integer.toString(multiple) + "=?");
+    }
+
+    public void getButtons() {
+        boolean repeat=false;
+
+        for (int i = 0; i < 4; i++) {
+            do {
+                repeat = false;
+
+                buttonChoices[i] = num * (rand.nextInt(8 + 2));
+
+                for (int x = 0; x < 4; x++)
+                    if (buttonChoices[i] == buttonChoices[x] && x != i || buttonChoices[i] == multiple * num) repeat = true;
+
+            } while (repeat);
+        }
+
+        buttonChoices[rand.nextInt(4)] = multiple * num;
+
+        button1.setText(buttonChoices[0]);
+        button2.setText(buttonChoices[1]);
+        button3.setText(buttonChoices[2]);
+        button4.setText(buttonChoices[3]);
+    }
+
+    public void checkAnswer(int n)
+    {
+        if(buttonChoices[n] == num * multiple)
+        {
+            numbers[n]++;
+            mSoundPool.play(right_answer, 1.0f, 1.0f, 0, 0, 1.0f);
+        }
+        else {
+            numbers[n] = 0;
+            mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
+        }
+    }
+    public void onButton1Clicked(View v){
+        checkAnswer(0);
+    }
+
+    public void onButton2Clicked(View v){
+        checkAnswer(1);
+    }
+
+    public void onButton3Clicked(View v){
+        checkAnswer(2);
+    }
+
+    public void onButton4Clicked(View v){
+        checkAnswer(3);
     }
 
 }
