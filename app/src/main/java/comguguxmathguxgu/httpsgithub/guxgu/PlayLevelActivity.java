@@ -95,7 +95,7 @@ public class PlayLevelActivity extends AppCompatActivity {
     }
 
     public void getButtons() {
-        boolean repeat=false;
+        boolean repeat=false; 
 
         for (int i = 0; i < 4; i++) {
             do {
