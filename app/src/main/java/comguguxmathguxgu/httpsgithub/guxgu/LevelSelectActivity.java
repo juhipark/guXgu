@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import static android.R.attr.level;
 
 public class LevelSelectActivity extends AppCompatActivity {
+LinearLayout parent;
 
     private static SoundPool mSoundPool;
     private static int buttonClinkSound;
@@ -20,46 +23,34 @@ public class LevelSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
 
+
+        int iNumberOfButtons =  5; // what ever number was passed from user profile;
+        Button[] dynamicButtons = new Button[iNumberOfButtons];
+
+        parent = (LinearLayout) findViewById(R.id.ll_parent);
+
+
+        for (int i = 0; i < iNumberOfButtons; i++) {
+
+            dynamicButtons[i] = new Button(LevelSelectActivity.this);
+            dynamicButtons[i].setText("Level " + (i+1));
+            dynamicButtons[i].setId(i);
+
+            parent.addView(dynamicButtons[i]);
+            final int index = i;
+            dynamicButtons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    play(index+1);
+                }
+            });
+
+        }
+
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         buttonClinkSound = mSoundPool.load(getApplicationContext(), R.raw.button_click, 1);
 
-    }
-
-    public void onLevel1Clicked(View v){
-        play(1);
-    }
-
-    public void onLevel2Clicked(View v){
-        play(2);
-    }
-
-    public void onLevel3Clicked(View v){
-        play(3);
-    }
-
-    public void onLevel4Clicked(View v){
-        play(4);
-    }
-
-    public void onLevel5Clicked(View v){
-        play(5);
-    }
-
-    public void onLevel6Clicked(View v){
-        play(6);
-    }
-
-    public void onLevel7Clicked(View v){
-        play(7);
-    }
-
-    public void onLevel8Clicked(View v){
-        play(8);
-    }
-
-    public void onLevel9Clicked(View v){
-
-        play(9);
     }
 
     public void clickSound()
@@ -74,7 +65,5 @@ public class LevelSelectActivity extends AppCompatActivity {
         intent.putExtra("num", levelNum);
         startActivity(intent);
     }
-
-
 
 }
