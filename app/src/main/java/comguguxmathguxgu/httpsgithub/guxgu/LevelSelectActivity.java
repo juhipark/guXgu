@@ -26,47 +26,39 @@ public class LevelSelectActivity extends AppCompatActivity {
     }
 
     public void onLevel1Clicked(View v){
-        clickSound();
         play(1);
     }
 
     public void onLevel2Clicked(View v){
-        clickSound();
         play(2);
     }
 
     public void onLevel3Clicked(View v){
-        clickSound();
         play(3);
     }
 
     public void onLevel4Clicked(View v){
-        clickSound();
         play(4);
     }
 
     public void onLevel5Clicked(View v){
-        clickSound();
         play(5);
     }
 
     public void onLevel6Clicked(View v){
-        clickSound();
         play(6);
     }
 
     public void onLevel7Clicked(View v){
-        clickSound();
         play(7);
     }
 
     public void onLevel8Clicked(View v){
-        clickSound();
         play(8);
     }
 
     public void onLevel9Clicked(View v){
-        clickSound();
+
         play(9);
     }
 
@@ -77,6 +69,7 @@ public class LevelSelectActivity extends AppCompatActivity {
 
     public void play(int levelNum)
     {
+        clickSound();
         Intent intent = new Intent(getApplicationContext(),PlayLevelActivity.class);
         intent.putExtra("num", levelNum);
         startActivity(intent);
