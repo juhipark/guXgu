@@ -1,8 +1,13 @@
 package comguguxmathguxgu.httpsgithub.guxgu;
 
+import android.app.Dialog;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +25,7 @@ import static android.R.attr.x;
 import static android.R.id.button1;
 import static android.support.v7.widget.AppCompatDrawableManager.get;
 import static comguguxmathguxgu.httpsgithub.guxgu.R.id.button4;
+import static comguguxmathguxgu.httpsgithub.guxgu.R.id.start;
 import static comguguxmathguxgu.httpsgithub.guxgu.R.string.random;
 
 public class PlayLevelActivity extends AppCompatActivity {
@@ -29,6 +35,10 @@ public class PlayLevelActivity extends AppCompatActivity {
     private static int right_answer;
     private static int wrong_answer;
     private Button button1, button2, button3, button4;
+    private CountDownTimer countDownTimer;
+    private TextView countDownText;
+    private long time;
+    private boolean timerRunning;
     private TextView equation;
     private int[] numbers = new int[8];
     private int[] buttonChoices = new int[4];
@@ -43,6 +53,7 @@ public class PlayLevelActivity extends AppCompatActivity {
         mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         right_answer = mSoundPool.load(getApplicationContext(), R.raw.right_answer, 1);
         wrong_answer = mSoundPool.load(getApplicationContext(), R.raw.wrong_answer, 1);
+        countDownText = (TextView) findViewById(R.id.timer);
         equation = (TextView) findViewById(R.id.findEquation);
         button1 = (Button)findViewById(R.id.button1);
         button2 = (Button)findViewById(R.id.button2);
@@ -52,18 +63,20 @@ public class PlayLevelActivity extends AppCompatActivity {
         Intent intent = getIntent();
         num = intent.getIntExtra("num", 0);
 
-        start();
+        startGame();
     }
 
-    public void start()
+    public void startGame()
     {
-        levelUp();
-        getNumber();
+        checkMastery();
+        getMultible();
         getEquation();
         getButtons();
+        getTime();
+        levelUp();
     }
 
-    public void levelUp()
+    public void checkMastery()
     {
         boolean check=true;
 
@@ -75,10 +88,10 @@ public class PlayLevelActivity extends AppCompatActivity {
         }
 
         if(check)
-            ;//level up
+            levelUp();
     }
 
-    public void getNumber()
+    public void getMultible()
     {
         int temp;
         do{
@@ -100,7 +113,7 @@ public class PlayLevelActivity extends AppCompatActivity {
             do {
                 repeat = false;
 
-                buttonChoices[i] = num * (rand.nextInt(8 + 2));
+                buttonChoices[i] = num * (rand.nextInt(8) + 2);
 
                 for (int x = 0; x < 4; x++)
                     if (buttonChoices[i] == buttonChoices[x] && x != i || buttonChoices[i] == multiple * num) repeat = true;
@@ -118,18 +131,39 @@ public class PlayLevelActivity extends AppCompatActivity {
 
     public void checkAnswer(int n)
     {
-        if(buttonChoices[n] == num * multiple)
+        if(buttonChoices[n] == num * multiple && n != 5)
         {
-            numbers[n]++;
+            numbers[multiple]++;
             mSoundPool.play(right_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         }
         else {
-            numbers[n] = 0;
+            numbers[multiple] = 0;
             mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
         }
 
-        start();
+        startGame();
     }
+
+    public void getTime(){
+
+        time = 5000;
+
+        countDownTimer = new CountDownTimer(time, 1000) {
+            @Override
+            public void onTick(long l) {
+                time = l;
+                countDownText.setText(Integer.toString((int) time/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                numbers[multiple] = 0;
+                mSoundPool.play(wrong_answer, 1.0f, 1.0f, 0, 0, 1.0f);
+                startGame();
+            }
+        }.start();
+    }
+
     public void onButton1Clicked(View v){
         checkAnswer(0);
     }
@@ -146,4 +180,9 @@ public class PlayLevelActivity extends AppCompatActivity {
         checkAnswer(3);
     }
 
+    public void levelUp()
+    {
+        Dialog dialog = new Dialog(PlayLevelActivity.this);
+        //dialog.addContentView(R.layout.level_up, null);
+    }
 }
