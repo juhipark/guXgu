@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InstructionsActivity" />
         <activity android:name=".LevelSelectActivity"></activity>
         <activity android:name=".PlayLevelActivity"></activity>
         <activity android:name=".levelUp"></activity>
