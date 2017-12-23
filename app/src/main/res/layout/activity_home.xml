@@ -8,30 +8,30 @@
 
     <Button
         android:id="@+id/playButton"
-        android:onClick="onPlayButtonClicked"
-        android:width="200dp"
-        android:height="100dp"
-        android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/helpButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="95dp"
+        android:width="200dp"
+        android:height="100dp"
+        android:onClick="onPlayButtonClicked"
         android:text="@string/playButton"
+        android:textSize="40dp"
         tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="33dp"
-        android:layout_marginBottom="21dp"
-        android:layout_above="@+id/button2"
-        android:layout_centerHorizontal="true"/>
+        tools:layout_editor_absoluteY="33dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/helpButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="109dp"
         android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="170dp"
+        android:onClick="onHelpButtonClicked"
         android:text="Help"
         tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="325dp"
-        android:layout_marginBottom="227dp"
-        android:onClick="onHelpButtonClicked"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        tools:layout_editor_absoluteY="325dp" />
 
 </RelativeLayout>

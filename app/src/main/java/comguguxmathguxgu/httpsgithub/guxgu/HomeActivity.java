@@ -23,10 +23,10 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onPlayButtonClicked(View v){
         mSoundPool.play(buttonClinkSound, 1.0f, 1.0f, 0, 0, 1.0f);
-        startActivity(new Intent(this, LevelSelectActivity.class));
+        startActivity(new Intent(HomeActivity.this, LevelSelectActivity.class));
     }
 
     public void onHelpButtonClicked(View v){
-        startActivity(new Intent(this, InstructionsActivity.class));
+        startActivity(new Intent(HomeActivity.this, InstructionsActivity.class));
     }
 }
