@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
+
 
 public class LevelPlayActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,6 +23,9 @@ public class LevelPlayActivity extends AppCompatActivity implements View.OnClick
     private int answerPair;
     private Button button1, button2, button3, button4;
     private TextView equation;
+    private ArrayList<Integer> valuesList;
+    private List<Integer> keysList;
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,13 @@ public class LevelPlayActivity extends AppCompatActivity implements View.OnClick
         button2 = (Button)findViewById(R.id.button2);
         button3 = (Button)findViewById(R.id.button3);
         button4 = (Button)findViewById(R.id.button4);
+
         showView();
 
         button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
     }
 
     public int selectRand(){
@@ -62,8 +69,8 @@ public class LevelPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
     public void showView(){
-        ArrayList<Integer> valuesList = new ArrayList<Integer>(hMap.values());
-        List<Integer> keysList = new ArrayList<>(hMap.keySet());
+        valuesList = new ArrayList<Integer>(hMap.values());
+        keysList = new ArrayList<>(hMap.keySet());
 
         equation.setText(Integer.toString(num) + " * " + Integer.toString(keysList.get(answerPair)) + " = ?");
         button1.setText(Integer.toString(valuesList.get(0)));
@@ -77,5 +84,23 @@ public class LevelPlayActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         Button b = (Button)view;
         String buttonText = b.getText().toString();
+
+        if(buttonText == valuesList.get(answerPair).toString())
+            score += 1;
+        else
+            score -= 1;
+        if(score > 10){
+            Intent intent = new Intent(getApplicationContext(), LevelCompleteActivity.class);
+            intent.putExtra("msg", "You Won!");
+            startActivity(intent);
+            finish();
+        }else{
+            startGame();
+            showView();
+        }
     }
+
+
+
+
 }
