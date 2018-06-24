@@ -40,7 +40,7 @@ public class PlayLevelActivity extends AppCompatActivity {
     private long time;
     private boolean timerRunning;
     private TextView equation;
-    private int[] numbers = new int[8];
+    private int[] numbers = new int[9];
     private int[] buttonChoices = new int[4];
     private int multiple;
     private int num;
@@ -63,13 +63,38 @@ public class PlayLevelActivity extends AppCompatActivity {
         Intent intent = getIntent();
         num = intent.getIntExtra("num", 0);
 
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButton1Clicked(view);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButton2Clicked(view);
+            }
+        });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButton3Clicked(view);
+            }
+        });
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButton4Clicked(view);
+            }
+        });
+
         startGame();
     }
 
     public void startGame()
     {
         checkMastery();
-        getMultible();
+        getMultiple();
         getEquation();
         getButtons();
         getTime();
@@ -91,11 +116,11 @@ public class PlayLevelActivity extends AppCompatActivity {
             levelUp();
     }
 
-    public void getMultible()
+    public void getMultiple()
     {
         int temp;
         do{
-            temp = rand.nextInt(8);
+            temp = rand.nextInt(9);
         }while(numbers[temp] >= 3);
 
         multiple = temp + 2;
@@ -126,7 +151,7 @@ public class PlayLevelActivity extends AppCompatActivity {
         button1.setText(Integer.toString(buttonChoices[0]));
         button2.setText(Integer.toString(buttonChoices[1]));
         button3.setText(Integer.toString(buttonChoices[2]));
-        button4.setText(Integer.toString(buttonChoices[3]));
+        //button4.setText(Integer.toString(buttonChoices[3]));
     }
 
     public void checkAnswer(int n)

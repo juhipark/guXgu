@@ -33,7 +33,7 @@ LinearLayout parent;
         for (int i = 0; i < iNumberOfButtons; i++) {
 
             dynamicButtons[i] = new Button(LevelSelectActivity.this);
-            dynamicButtons[i].setText("Level " + (i+1));
+            dynamicButtons[i].setText("Multiple of " + (i+2));
             dynamicButtons[i].setId(i);
 
             parent.addView(dynamicButtons[i]);
@@ -42,7 +42,7 @@ LinearLayout parent;
                 @Override
                 public void onClick(View view) {
 
-                    play(index+1);
+                    play(index+2);
                 }
             });
 
@@ -61,7 +61,7 @@ LinearLayout parent;
     public void play(int levelNum)
     {
         clickSound();
-        Intent intent = new Intent(getApplicationContext(),PlayLevelActivity.class);
+        Intent intent = new Intent(getApplicationContext(),LevelPlayActivity.class);
         intent.putExtra("num", levelNum);
         startActivity(intent);
     }

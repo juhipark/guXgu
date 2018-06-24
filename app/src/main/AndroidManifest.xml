@@ -21,13 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LevelSelectActivity"></activity>
-        <activity android:name=".PlayLevelActivity"></activity>
-        <activity android:name=".levelUp"></activity>
-        <activity android:name=".LevelUp"></activity>
+        <activity android:name=".LevelSelectActivity" />
+        <activity android:name=".PlayLevelActivity" />
+        <activity android:name=".levelUp" />
+        <activity android:name=".LevelUp" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".LevelPlayActivity"></activity>
     </application>
 
 </manifest>
